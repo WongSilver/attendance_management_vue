@@ -1,27 +1,50 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/pages/Home.vue";
+import Login from "../views/pages/Login.vue";
+import User from "../views/pages/User.vue";
+import UserDetail from "../views/pages/UserDetail.vue";
+import UserEdit from "../views/pages/UserEdit.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "Index",
+    redirect: { name: "Home" },
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/home",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/user/list",
+    name: "User",
+    component: User,
+  },
+  {
+    path: "/user/:userId",
+    name: "UserDetail",
+    component: UserDetail,
+  },
+  {
+    path: "/user/:userId/edit",
+    name: "UserEdit",
+    component: UserEdit,
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  mode: "history", //去除#号键
+  // mode: "hash",
+  routes,
+});
 
-export default router
+export default router;
