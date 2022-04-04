@@ -1,8 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <img class="mlogo" src="../../assets/logo.png" alt="logo" />
-
+      <img class="mlogo" src="../../assets/logo.png" alt="logo"/>
       <p>
         <span display="inline" style="font-size: 32px">考勤管理系统</span>
       </p>
@@ -10,47 +9,22 @@
 
     <el-main>
       <div class="from-login" style="width: 30%; text-align: center">
-        <el-form
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          ref="ruleForm"
-          label-width="100px"
-          class="demo-ruleForm"
-        >
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item prop="name">
-            <el-input
-              placeholder="用户名"
-              type="text"
-              v-model="ruleForm.name"
-              autocomplete="off"
-            ></el-input>
+            <el-input placeholder="用户名" type="text" v-model="ruleForm.name" autocomplete="off"></el-input>
           </el-form-item>
 
           <el-form-item prop="password">
-            <el-input
-              placeholder="密码"
-              type="password"
-              v-model="ruleForm.password"
-              autocomplete="off"
-            ></el-input>
+            <el-input placeholder="密码" type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
           </el-form-item>
 
           <el-form-item prop="verify">
-            <el-input
-              type="text"
-              oninput="value=value.replace(/[^0-9|A-Z|a-z]{4}$/g,'')"
-              maxlength="4"
-              placeholder="验证码"
-              v-model="ruleForm.verify"
-            ></el-input>
+            <el-input type="text" oninput="value=value.replace(/[^0-9|A-Z|a-z]{4}$/g,'')" maxlength="4"
+                      placeholder="验证码" v-model="ruleForm.verify"></el-input>
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')"
-              >登录</el-button
-            >
-
+            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -64,7 +38,7 @@
 </template>
 
 <script>
-import router from "@/router";
+
 export default {
   name: "Login",
   data() {
@@ -94,14 +68,14 @@ export default {
     };
     return {
       ruleForm: {
-        name: "",
-        password: "",
-        verify: "",
+        name: "wang",
+        password: "123456",
+        verify: "1",
       },
       rules: {
-        name: [{ validator: validateName, trigger: "blur" }],
-        password: [{ validator: validatePass, trigger: "blur" }],
-        verify: [{ validator: validateVerify, trigger: "blur" }],
+        name: [{validator: validateName, trigger: "blur"}],
+        password: [{validator: validatePass, trigger: "blur"}],
+        verify: [{validator: validateVerify, trigger: "blur"}],
       },
     };
   },
@@ -110,25 +84,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const _this = this;
-          this.$axios
-            .post("http://127.0.0.1:8088/login", this.ruleForm)
-            .then((res) => {
-              // 获取headers中的数据
-              const jwt = res.headers["authorization"];
-              const userInfo = res.data.data;
+          this.$axios.post("/login", this.ruleForm).then((res) => {
+            // 获取headers中的数据
+            const jwt = res.headers["authorization"];
+            const userInfo = res.data.data;
 
-              // 把数据存入store中
-              _this.$store.commit("SET_TOKEN", jwt);
-              _this.$store.commit("SET_USERINFO", userInfo);
+            // 把数据存入store中
+            _this.$store.commit("SET_TOKEN", jwt);
+            _this.$store.commit("SET_USERINFO", userInfo);
 
-              // 跳转
-              if (jwt != null) {
-                _this.$router.push("/home");
-              }else{
-                alert("用户名或密码错误")
-                _this.resetForm("formName")
-              }
-            });
+            // 跳转
+            _this.$router.push("/home");
+          }).catch(error => {
+            console.log(error.response)
+          });
         } else {
           console.log("error submit!!");
           return false;
@@ -162,19 +131,18 @@ export default {
   height: 60%;
 }
 .el-header {
-  background-color: #b3c0d1;
+  background-color: #428675;
   color: #333;
   text-align: center;
-  height: 30% !important;
+  height: 20%;
 }
 .el-main {
-  background-color: #e9eef3;
+  background-color: #c6e6e8;
   color: #333;
   text-align: center;
-  height: 60% !important;
 }
 .el-footer {
-  background-color: #b3c0d1;
+  background-color: #428675;
   color: #333;
   vertical-align: bottom;
   text-align: center;
