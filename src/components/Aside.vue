@@ -1,5 +1,5 @@
 <template>
-  <el-menu style="height: 100%;overflow-x: hidden; min-height: 100%; "
+  <el-menu class="demo" style="height: 100%;overflow-x: hidden; min-height: 100%; "
            text-color="#c6e6e8"
            width="200px"
            background-color="#1ba784"
@@ -28,7 +28,6 @@
       </template>
       <el-menu-item index="user">用户列表</el-menu-item>
       <el-menu-item index="userDataShow">用户分析</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item>
     </el-submenu>
 
     <!--    角色管理-->
@@ -37,13 +36,13 @@
         <i :style="{color:iconColor}" class="el-icon-link"></i>
         <span slot="title">角色管理</span>
       </template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
-      <el-submenu index="3-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-      </el-submenu>
+      <el-menu-item index="/role">角色列表</el-menu-item>
+      <el-menu-item index="/roleDataShow">角色分析</el-menu-item>
+      <!--      <el-menu-item index="3-3">选项3</el-menu-item>
+            <el-submenu index="3-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+            </el-submenu>-->
     </el-submenu>
 
     <!--    权限管理-->
@@ -52,13 +51,13 @@
         <i :style="{color:iconColor}" class="el-icon-key"></i>
         <span slot="title">权限管理</span>
       </template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
-      <el-submenu index="3-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-      </el-submenu>
+      <el-menu-item index="/right">权限列表</el-menu-item>
+      <el-menu-item index="/rightDataShow">权限分析</el-menu-item>
+      <!--      <el-menu-item index="3-3">选项3</el-menu-item>
+            <el-submenu index="3-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+            </el-submenu>-->
     </el-submenu>
 
     <!--    数据统计-->
@@ -88,6 +87,7 @@ export default {
   props: {
     isCollapse: Boolean,
   },
+
 }
 </script>
 <style>

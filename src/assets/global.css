@@ -23,3 +23,35 @@ html, body {
 .pd-10 {
     padding: 10px 0;
 }
+
+
+/*全局设置 header main footer*/
+#app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.el-container {
+    height: 100vh;
+}
+.el-header {
+    background-color: #428675;
+    text-align: center;
+    height: 20%;
+}
+
+.el-main {
+    background-color: #c6e6e8;
+    text-align: center;
+}
+
+.el-footer {
+    background-color: #428675;
+    color: #333;
+    vertical-align: bottom;
+    text-align: center;
+}

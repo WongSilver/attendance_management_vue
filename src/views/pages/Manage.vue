@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100%; min-height: 100vh">
     <el-aside :width="sideWidth + 'px'"
-              style="background-color: rgb(48, 65, 86); height: 100%">
+              style="background-color: rgb(48, 65, 86); height: 100%" id="myTransition">
       <Aside :isCollapse="this.isCollapse"/>
     </el-aside>
 
@@ -46,4 +46,7 @@ export default {
 };
 </script>
 <style>
+#myTransition {
+  transition: width 100ms ease-out;
+}
 </style>

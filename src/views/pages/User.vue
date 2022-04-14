@@ -10,25 +10,40 @@
     </div>
     <div style="margin: 10px;text-align: left">
       <el-button type="primary" plain @click="handleAdd">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
-      <el-button type="primary" plain>导入 <i class="el-icon-bottom"></i></el-button>
-      <el-button type="primary" plain>导出 <i class="el-icon-top"></i></el-button>
+      <el-upload style="display: inline-block"
+                 class="upload-demo ml-5 mr-5"
+                 action="http://127.0.0.1:8088/user/import"
+                 multiple
+                 accept="xlsx"
+                 :on-success="handleUpSuccess"
+                 :on-error="handleUpError"
+                 :show-file-list="false"
+                 :limit="1">
+        <el-button type="primary" plain>导入 <i class="el-icon-bottom"></i></el-button>
+      </el-upload>
+      <el-button type="primary" plain @click="exportExcel">导出 <i class="el-icon-top"></i></el-button>
       <el-popconfirm title="确定删除吗？" @confirm="handleDeleteBatch" class="ml-5">
         <el-button type="danger" plain slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
     </div>
-    <el-table :data="tableData" border stripe :header-cell-style="headClass" :cell-style="cellClass" height="550"
-              @selection-change="handleSelectionChange">
+    <el-table :data="tableData" border stripe :header-cell-style="headClass"
+              :cell-style="cellClass" height="650px"
+              @selection-change="handleSelectionChange"
+              row-key="id"
+              default-expand-all>
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="ID" width="140"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="telephone" label="手机号"></el-table-column>
       <el-table-column prop="mail" label="邮箱"></el-table-column>
       <el-table-column prop="groupId" label="班级"></el-table-column>
       <el-table-column prop="status" label="是否注销"></el-table-column>
       <el-table-column prop="lastTime" label="上次登录时间"></el-table-column>
       <el-table-column prop="createTime" label="创建时间"></el-table-column>
-      <el-table-column prop="option" label="操作">
+      <el-table-column prop="option" label="操作" width="300px">
         <template slot-scope="scope">
+          <el-button type="info" plain slot="reference" @click="handleMenu(scope.row)">角色设置 <i class="el-icon-menu"></i>
+          </el-button>
           <el-button type="warning" plain @click="handleEdit(scope.$index, scope.row)" class="m-2">编辑 <i
               class="el-icon-edit"></i></el-button>
           <el-popconfirm title="确定删除吗？" @confirm="handleDelete(scope.$index, scope.row)" class="m-2">
@@ -48,8 +63,9 @@
           :total="total">
       </el-pagination>
     </div>
+    <!--    添加或编辑 用户信息弹窗-->
     <el-dialog title="用户信息" :visible.sync="dialogFormVisible" width="30%">
-      <el-form :model="form" label-width="100px">
+      <el-form :model="form" :inline="true" label-position="left">
         <el-form-item label="用户名">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -63,12 +79,30 @@
           <el-input v-model="form.mail" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="班级">
-          <el-input v-model="form.groupId" autocomplete="off"></el-input>
+          <el-select v-model="form.groupId">
+            <el-option label="测试1班" value="1"></el-option>
+            <el-option label="测试2班" value="2"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="save()">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--    设置 角色弹窗-->
+    <el-dialog title=角色设置 :visible.sync="dialogMenuVisible" width="30%">
+      <el-form :model="form" :inline="true">
+        <el-form-item label="角色">
+          <el-select v-model="role.name" @change="getRoleID">
+            <el-option v-for="item in role" v-bind:key="item.id" :value="item.id" :label="item.name"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogMenuVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleRole()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -88,10 +122,14 @@ export default {
       userName: "",
       userMail: "",
       userGroup: "",
-      dialogFormVisible: false,
       form: {},
+      dialogFormVisible: false,
+      dialogMenuVisible: false,
       isEditPassword: true,
       rawId: [],
+      role: [],
+      userId: "",
+      roleId: "",
     }
   },
   created() {
@@ -169,6 +207,10 @@ export default {
       }
       console.log(this.rawId)
     },
+    //导出数据
+    exportExcel() {
+      window.open("http://127.0.0.1:8088/user/export")
+    },
     //加载数据
     loadData() {
       this.$axios.get("/user/list", {
@@ -185,6 +227,38 @@ export default {
             this.total = data.total;
           }
       )
+    },
+    handleUpSuccess() {
+      ElementUI.Message.success("导入成功")
+      this.loadData()
+    },
+    handleUpError() {
+      ElementUI.Message.success("导入失败")
+      this.loadData()
+    },
+    //加载角色菜单
+    handleMenu(row) {
+      this.dialogMenuVisible = true
+      this.userId = row.id
+      this.$axios.get("/role/all").then(res => {
+        this.role = res.data.data;
+      })
+    },
+    //把用户和角色绑定
+    handleRole() {
+      let role = {}
+      role.userId = this.userId
+      role.roleId = this.roleId
+      this.$axios.post("/role/setRole", role).then(res => {
+        if (res.data.code === 200) {
+          ElementUI.Message.success(res.data.msg);
+          this.dialogMenuVisible = false;
+        }
+      })
+    },
+    //获取角色ID
+    getRoleID(id) {
+      this.roleId = id
     }
   }
 };
