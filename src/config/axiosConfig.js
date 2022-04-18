@@ -2,19 +2,16 @@ import axios from "axios";
 import ElementUI from "element-ui";
 import router from "../router";
 import store from "../store";
-import da from "element-ui/src/locale/lang/da";
 
 // 配置基础路由路径
 axios.defaults.baseURL = "http://127.0.0.1:8088/"
 
 // 前置拦截
 axios.interceptors.request.use(config => {
-
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
-    // console.log(localStorage.getItem("token"))
     if (localStorage.getItem("token") !== null) {
         config.headers['authorization'] = localStorage.getItem("token");
-    } else if((localStorage.getItem("token") === null)) {
+    } else if ((localStorage.getItem("token") === null)) {
         router.push("/login")
     }
 
