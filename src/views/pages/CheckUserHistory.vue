@@ -4,7 +4,6 @@
       <el-card style="width: 900px; margin: 10px auto">
         <el-descriptions class="margin-top" title="请假单" :column="1" border>
           <template slot="extra">
-<!--            <el-button type="primary" size="small">操作</el-button>-->
           </template>
           <el-descriptions-item>
             <template slot="label"><i class="el-icon-mobile-phone"></i> 请假时间</template>
