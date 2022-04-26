@@ -23,7 +23,7 @@
 
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-            <el-button type="warning" @click="register('ruleForm')">注册</el-button>
+            <el-button type="warning" @click="register()">注册</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -52,6 +52,28 @@ import ElementUI from "element-ui";
 export default {
   name: "Login",
   data() {
+    return {
+      //登录表单
+      ruleForm: {
+        name: "wang",
+        password: "123456",
+        verify: "1",
+      },
+      // 注册表单
+      formRegister: {
+        name: "",
+        password: "",
+      },
+      //登录验证
+      rules: {
+        name: [{validator: validateName, trigger: "blur"}],
+        password: [{validator: validatePass, trigger: "blur"}],
+        verify: [{validator: validateVerify, trigger: "blur"}],
+      },
+      dialogFormVisible: false,
+      regRule: {},      //TODO 有时间实现
+    };
+
     const validateName = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入用户名"));
@@ -76,60 +98,10 @@ export default {
         callback();
       }, 100);
     };
-//    注册密码验证
-    /*    const regRePassword = (rule, value, callback) => {
-          if (value === "") {
-            callback(new Error('请输入密码'));
-          } else if (value !== this.formRegister.regPassword) {
-            callback(new Error('两次输入密码不一致!'));
-          } else {
-            callback();
-          }
-        };
-        const regPassword = (rule, value, callback) => {
-          console.log(this.formRegister.regRePassword)
-          if (value === "") {
-            callback(new Error("请输入密码"))
-          } else {
-            if (this.formRegister.regRePassword !== "") {
-              this.$refs.formRegister.validateField('regRePassword')
-            }
-            callback()
-          }
-        }*/
-    return {
-      //登录表单
-      ruleForm: {
-        name: "wang",
-        password: "123456",
-        verify: "1",
-      },
-      // 注册表单
-      formRegister: {
-        name: "",
-        password: "",
-      },
-      dialogFormVisible: false,
-      //登录验证
-      rules: {
-        name: [{validator: validateName, trigger: "blur"}],
-        password: [{validator: validatePass, trigger: "blur"}],
-        verify: [{validator: validateVerify, trigger: "blur"}],
-      },
-      //注册验证
-      regRule: {
-        /*        regName: [
-                  {required: true, message: '请输入用户名', trigger: 'blur'},
-                  {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-                ],
-                regPassword: [{validator: regPassword, trigger: 'blur'}],
-                regRePassword: [{validator: regRePassword, trigger: 'blur'}],*/
-      },
-
-    };
   },
+
   methods: {
-    submitForm(formName) {
+    submitForm: function (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const _this = this;
@@ -141,22 +113,22 @@ export default {
             // 把数据存入store中
             _this.$store.commit("SET_TOKEN", jwt);
             _this.$store.commit("SET_USERINFO", userInfo);
-
             // 跳转
             _this.$router.push("/home");
           }).catch(error => {
             console.log(error.response)
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     },
-    register(formName) {
+
+    //打开注册功能
+    register() {
       this.dialogFormVisible = true
-      // this.$refs[formName].resetFields();
     },
+
     //添加用户
     save() {
       console.log(this.formRegister)
