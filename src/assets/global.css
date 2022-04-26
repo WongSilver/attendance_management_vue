@@ -16,7 +16,7 @@ html, body {
     margin-left: 5px;
 }
 
-.m-2{
+.m-2 {
     margin: 2px;
 }
 
@@ -35,9 +35,11 @@ html, body {
     padding: 0;
     margin: 0;
 }
+
 .el-container {
     height: 100vh;
 }
+
 .el-header {
     background-color: #428675;
     text-align: center;
