@@ -78,6 +78,7 @@
           :props="props"
           :data="rightData"
           show-checkbox
+          getCheckedNodes="getCheckedNodes"
           node-key="id"
           ref="tree"
           @check-change="handleCheckChange">
@@ -116,6 +117,7 @@ export default {
       props: {
         label: 'name',
       },
+      roleId: "",
     }
   },
   created() {
@@ -145,7 +147,7 @@ export default {
       this.$axios.post("/role/add", this.form).then(res => {
         let data = res.data;
         if (data.code === 200) {
-          ElementUI.Message.success("添加成功")
+          ElementUI.Message.success("操作成功")
           this.dialogFormVisible = false;
           this.isEditPassword = true
           this.loadData()
@@ -212,8 +214,9 @@ export default {
 
     //  加载权限菜单
     handleMenu(row) {
+      this.roleId = row.id;
       this.dialogMenuVisible = true
-      //查询已有权限
+      // 查询已有权限
       this.$axios.get("/roleRight/checkedRight/" + row.id).then(res => {
         this.$refs.tree.setCheckedKeys(res.data.data)
       })
@@ -224,11 +227,19 @@ export default {
     },
     // 添加权限事件
     handleRight() {
-
+      let roleRight = {};
+      roleRight.roleId = this.roleId;
+      roleRight.rightIds = this.$refs.tree.getCheckedKeys();
+      this.$axios.post("/roleRight/setRoleRight", roleRight).then(res => {
+        if (res.data.code === 200) {
+          ElementUI.Message.success(res.data.msg);
+          this.dialogMenuVisible = false;
+        }
+      })
     },
     //权限树变化时触发
     handleCheckChange(data, checked, indeterminate) {
-      console.log(data, checked, indeterminate);
+      // console.log(data, checked, indeterminate);
     },
   }
 };
