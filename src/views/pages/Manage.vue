@@ -1,11 +1,13 @@
 <template>
   <el-container style="height: 100%; min-height: 100vh">
+    <!--侧边栏-->
     <el-aside :width="sideWidth + 'px'"
               style="background-color: rgb(48, 65, 86); height: 100%" id="myTransition">
       <Aside :isCollapse="this.isCollapse"/>
     </el-aside>
 
     <el-container>
+      <!--头部-->
       <el-header background-color="#08ffc8">
         <Header :collapseBtnClass="collapseBtnClass" :collapse="collapse"/>
       </el-header>
