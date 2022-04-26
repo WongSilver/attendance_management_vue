@@ -106,7 +106,7 @@ export default {
       this.$axios.post("/right/add", this.form).then(res => {
         let data = res.data;
         if (data.code === 200) {
-          ElementUI.Message.success("添加成功")
+          ElementUI.Message.success("操作成功")
           this.dialogFormVisible = false;
           this.isEditPassword = true
           this.loadData()

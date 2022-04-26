@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
     <div style="justify-content:flex-end">
-      <el-dropdown style="width: 60px;cursor: pointer; ">
+      <el-dropdown style="width: 80px;cursor: pointer; ">
         <span v-text="this.userName"></span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item><span @click="userInfo">个人信息</span></el-dropdown-item>
@@ -28,21 +28,20 @@ export default {
   },
   data() {
     return {
-      userName: JSON.parse(sessionStorage.getItem("userInfo")).name,
+      userName: JSON.parse(sessionStorage.getItem("userInfo")).userName,
     }
   },
   methods: {
     logout() {
-      this.$router.push("/login")
+      this.$router.push("/login");
       this.$store.commit("REMOVE_INFO");
     },
-    userInfo(){
+    userInfo() {
       this.$router.push("/userInfo")
     }
   },
   computed: {
-    //未完成
-    //TODO
+    //TODO 面包屑未实现全部功能
     breadcrumb() {
       return this.$route.meta;
     }

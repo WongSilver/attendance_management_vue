@@ -80,6 +80,7 @@
         </el-form-item>
         <el-form-item label="班级">
           <el-select v-model="form.groupId">
+            <el-option label="暂未分配班级" value="0"></el-option>
             <el-option label="测试1班" value="1"></el-option>
             <el-option label="测试2班" value="2"></el-option>
           </el-select>
@@ -160,7 +161,7 @@ export default {
       this.$axios.post("/user/add", this.form).then(res => {
         let data = res.data;
         if (data.code === 200) {
-          ElementUI.Message.success("添加成功")
+          ElementUI.Message.success("操作成功")
           this.dialogFormVisible = false;
           this.isEditPassword = true
           this.loadData()
@@ -249,7 +250,7 @@ export default {
       let role = {}
       role.userId = this.userId
       role.roleId = this.roleId
-      this.$axios.post("/role/setRole", role).then(res => {
+      this.$axios.post("/userRole/setRole", role).then(res => {
         if (res.data.code === 200) {
           ElementUI.Message.success(res.data.msg);
           this.dialogMenuVisible = false;

@@ -16,14 +16,14 @@
     </div>
 
 
-    <!--    TODO-->
+    <!--TODO-->
+    <!--想做成二级菜单，有思路，试了几次无果，就使用一级菜单-->
     <div v-for="item in rights" :key="item.id">
       <el-menu-item :index="item.url">
         <i :style="{color:iconColor}" :class="item.icon"></i>
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
     </div>
-
 
   </el-menu>
 </template>
@@ -49,7 +49,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 <style>
