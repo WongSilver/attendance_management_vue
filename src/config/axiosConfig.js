@@ -53,7 +53,11 @@ axios.interceptors.response.use(response => {
             store.commit("REMOVE_INFO")
             msg = "未授权异常，请重新登录"
             router.push("/login")
-        } else {
+        } else if(response.status === 500){
+            store.commit("REMOVE_INFO")
+            msg = "未知错误，请重新登录"
+            router.push("/login")
+        }else {
             msg = "未知错误"
         }
         ElementUI.Message.error(msg, {duration: 3 * 1000})
