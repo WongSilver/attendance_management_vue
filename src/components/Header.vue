@@ -8,8 +8,8 @@
       </el-breadcrumb>
     </div>
     <div style="justify-content:flex-end">
-      <el-dropdown style="width: 80px;cursor: pointer; ">
-        <span v-text="this.userName"></span><i class="el-icon-arrow-down" style="margin-left: 5px;"></i>
+      <el-dropdown style="width: 120px;cursor: pointer;" trigger="click">
+        <span>{{this.userName}}<i class="el-icon-arrow-down el-icon--right"></i></span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item><span @click="userInfo">个人信息</span></el-dropdown-item>
           <el-dropdown-item><span @click="logout">退出登录</span></el-dropdown-item>
