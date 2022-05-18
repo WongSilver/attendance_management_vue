@@ -26,7 +26,7 @@ export default {
     }
   },
   created() {
-    console.log(sessionStorage.getItem("userInfo"))
+    // console.log(sessionStorage.getItem("userInfo"))
     this.form = JSON.parse(sessionStorage.getItem("userInfo"));
   }
 }
