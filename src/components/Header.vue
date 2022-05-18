@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      userName: JSON.parse(sessionStorage.getItem("userInfo")).userName,
+      userName: JSON.parse(sessionStorage.getItem("userInfo")) === null ? "未登录" : JSON.parse(sessionStorage.getItem("userInfo")).userName,
     }
   },
   methods: {
