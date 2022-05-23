@@ -11,11 +11,12 @@ import CheckUser from "../views/pages/CheckUser.vue";
 import CheckAdmin from "../views/pages/CheckAdmin.vue";
 import CheckUserHistory from "../views/pages/CheckUserHistory.vue";
 import CheckAdminHistory from "../views/pages/CheckAdminHistory.vue";
+import Not404 from "../views/error-pages/Not404.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-    {path: "/login", name: "Login", component: Login},
+    {path: "/login", name: "Login", component: Login,meta: {name: "登录", path: "/login"}},
 
     //TODO 先用固定路由，动态路由后期完善
     {
@@ -24,6 +25,7 @@ const routes = [
         component: Manage,
         redirect: "/home",
         children: [
+            {path: "/", name: "home", component: Home, meta: {name: "首页", path: "/home"}},
             {path: "home", name: "Home", component: Home, meta: {name: "首页", path: "/home"}},
             {path: "user", name: "User", component: User, meta: {name: "用户列表", path: "/user"}},
             {path: "role", name: "role", component: Role, meta: {name: "角色列表", path: "/role"}},
@@ -43,26 +45,9 @@ const routes = [
                 component: CheckUserHistory,
                 meta: {name: "请假记录", path: "/checkUserHistory"}
             },
-            /*   {
-                   path: "userDataShow",
-                   name: "UserDataShow",
-                   component: UserDataShow,
-                   meta: {name: "用户分析", path: "/userDataShow"}
-               },
-               {
-                   path: "RoleDataShow",
-                   name: "roleDataShow",
-                   component: RoleDataShow,
-                   meta: {name: "角色分析", path: "/roleDataShow"}
-               },
-               {
-                   path: "RightDataShow",
-                   name: "rightDataShow",
-                   component: RightDataShow,
-                   meta: {name: "角色分析", path: "/rightDataShow"}
-               },*/
+            // 其他页面未定义的页面访问404
+            { path: "*", name: 'not404', component: {Not404}, meta: {name: "页面未找到",path: "/404"}}
         ],
-
     }];
 
 const router = new VueRouter({

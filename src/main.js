@@ -12,8 +12,17 @@ import "./assets/global.css"
 Vue.use(ElementUI, {size: "small"});
 
 Vue.config.productionTip = false;
+
 // 添加http请求库
 Vue.prototype.$axios = axios;
+
+// 设置标题
+router.beforeEach((to,from,next) =>{
+    if(to.meta.name){
+        document.title = to.meta.name
+    }
+    next();
+})
 
 new Vue({
     router,
