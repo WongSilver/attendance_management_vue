@@ -13,7 +13,7 @@
         <el-card>
           <div style="color:#5e665b;"><i class="el-icon-tickets"/> 今日请假人数</div>
           <div style="padding: 10px; font-weight: bold">
-            <el-tag type="info">13</el-tag>
+            <el-tag type="info">{{ this.userNum }}</el-tag>
           </div>
         </el-card>
       </el-col>
@@ -21,7 +21,7 @@
         <el-card>
           <div style="color:#f26b1f;"><i class="el-icon-link"/> 今日迟到人数</div>
           <div style="padding: 10px; font-weight: bold">
-            <el-tag type="warning">3</el-tag>
+            <el-tag type="warning">未统计</el-tag>
           </div>
         </el-card>
       </el-col>
@@ -29,7 +29,7 @@
         <el-card>
           <div style="color:#c02c38;"><i class="el-icon-ship"/> 今日旷课人数</div>
           <div style="padding: 10px; font-weight: bold">
-            <el-tag type="danger">12</el-tag>
+            <el-tag type="danger">未统计</el-tag>
           </div>
         </el-card>
       </el-col>
@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       userTotal: 0,
+      userNum: 0,
 
     }
   },
@@ -66,6 +67,18 @@ export default {
       title: {
         text: '每日请假人数统计图',
         left: 'center',
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: {
+            yAxisIndex: 'none'
+          },
+          dataView: { readOnly: false },
+          magicType: { type: ['line', 'bar'] },
+          restore: {},
+          saveAsImage: {}
+        }
       },
       tooltip: {
         trigger: 'axis'
@@ -89,6 +102,14 @@ export default {
       title: {
         text: '每日请假人数统计图',
         left: 'center'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { readOnly: false },
+          restore: {},
+          saveAsImage: {}
+        }
       },
       tooltip: {
         trigger: 'item'
@@ -115,7 +136,6 @@ export default {
     }
     this.$axios.get("/check/homeList").then(res => {
       let lineData = res.data.data
-      console.log()
       let pieData = []
       for (let i = 0; i < lineData.x.length; i++) {
         let obj = {};
@@ -128,6 +148,18 @@ export default {
       pieOption.series[0].data = pieData
       lineChart.setOption(lineOption);
       pieChart.setOption(pieOption);
+
+      // 今日请假人数
+      let curDate = new Date();
+      let formatDate = "";
+      formatDate += curDate.getFullYear() + "-"
+      formatDate += ("0" + (curDate.getMonth() + 1 )).slice(-2) + "-"
+      formatDate += curDate.getDate()
+      for (let i = 0; i < lineData.x.length; i++) {
+        if (lineData.x[i] === formatDate) {
+          this.userNum = lineData.y[i]
+        }
+      }
     });
 
     //获取学校总人数
