@@ -8,18 +8,20 @@
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
                  style="margin: 0 auto;padding: 20px 60px 0 60px;">
           <el-form-item prop="name">
-            <el-input placeholder="用户名" type="text" v-model="ruleForm.name" autocomplete="off" size="30px"></el-input>
+            <el-input placeholder="用户名" type="text" v-model="ruleForm.name" autocomplete="off" size="30px"
+                      @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
 
           <el-form-item prop="password">
-            <el-input placeholder="密码" type="password" v-model="ruleForm.password" autocomplete="off"
-                      size="30px"></el-input>
+            <el-input placeholder="密码" type="password" v-model="ruleForm.password" autocomplete="off" size="30px"
+                      @keyup.enter.native="submitForm('ruleForm')"></el-input>
           </el-form-item>
 
-          <el-form-item prop="verify">
-            <el-input type="text" oninput="value=value.replace(/[^0-9|A-Z|a-z]{4}$/g,'')" maxlength="4"
-                      placeholder="验证码" v-model="ruleForm.verify" size="30px"></el-input>
-          </el-form-item>
+
+          <!--          <el-form-item prop="verify">-->
+          <!--            <el-input type="text" oninput="value=value.replace(/[^0-9|A-Z|a-z]{4}$/g,'')" maxlength="4"-->
+          <!--                      placeholder="验证码" v-model="ruleForm.verify" size="30px"></el-input>-->
+          <!--          </el-form-item>-->
 
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -52,6 +54,35 @@ import ElementUI from "element-ui";
 export default {
   name: "Login",
   data() {
+    // 用户名验证
+    const validateName = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入用户名"));
+      }
+      setTimeout(() => {
+        callback();
+      }, 100);
+    };
+
+    // 密码验证
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      }
+      setTimeout(() => {
+        callback();
+      }, 100);
+    };
+    /*
+        const validateVerify = (rule, value, callback) => {
+          if (value === "") {
+            callback(new Error("请输入验证码"));
+          }
+          setTimeout(() => {
+            callback();
+          }, 100);
+        };
+        */
     return {
       //登录表单
       ruleForm: {
@@ -68,40 +99,16 @@ export default {
       rules: {
         name: [{validator: validateName, trigger: "blur"}],
         password: [{validator: validatePass, trigger: "blur"}],
-        verify: [{validator: validateVerify, trigger: "blur"}],
+        // verify: [{validator: validateVerify, trigger: "blur"}],
       },
       dialogFormVisible: false,
       regRule: {},      //TODO 有时间实现
     };
 
-    const validateName = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入用户名"));
-      }
-      setTimeout(() => {
-        callback();
-      }, 100);
-    };
-    const validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      }
-      setTimeout(() => {
-        callback();
-      }, 100);
-    };
-    const validateVerify = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入验证码"));
-      }
-      setTimeout(() => {
-        callback();
-      }, 100);
-    };
   },
 
   methods: {
-    submitForm: function (formName) {
+    submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const _this = this;
