@@ -1,13 +1,19 @@
-# attendance_management_vue
+## attendance_management_vue
+## 基于SpringBoot的学生考勤系统前端设计
+### 热词：Vue、Element UI、Echarts
 
-基于SpringBoot的学生考勤系统前端设计
 
-必备安装：NodeJS-14-LTS、python2.7 <br/>
-安装报错使用NodeJS14的长期维护版 `https://nodejs.org/download/release/v14.19.1/` <br/>
-运行报错安装 `npm install node-sass` <br/>
+### 1、、运行环境：
+Nodejs v16
 
-#### 项目安装 `npm install`
+### 2、简介
++ 这个项目是前端项目，项目所需文件都在下面。<br>
++ 免编译使用方法
+  + 安装serve插件：`npm install -g serve`
+  + [点此下载](https://github.com/WongSilver/attendance_management_vue/releases/tag/v0.0.1) 打包好的项目  。解压，在dist父目录中运行命令：`serve -s dist` <br>
++ 正常使用方法：
+  + 项目安装 `npm install` 报错的话用NodeJS14的长期维护版 `https://nodejs.org/download/release/v14.19.1/`
+  + 项目运行 `npm run serve` 报错的话安装 `npm install node-sass`
++ 后端项目地址 [点此访问](https://github.com/WongSilver/attendance_management_api)
 
-#### 项目运行 `npm run serve`
-
-#### 项目打包 `npm run build`
+## [后端项目](https://github.com/WongSilver/attendance_management_api)包含了部分演示效果，有问题咨询 QQ:783244553
