@@ -10,7 +10,7 @@ Nodejs v16
 + 这个项目是前端项目，项目所需文件都在下面。<br>
 + 免编译使用方法
   + 安装serve插件：`npm install -g serve`
-  + [点此下载](https://github.com/WongSilver/attendance_management_vue/releases/tag/v0.0.1) 打包好的项目  。解压，在dist父目录中运行命令：`serve -s dist` <br>
+  + [点此下载](https://github.com/WongSilver/attendance_management_vue/releases/tag/v0.0.1) 打包好的项目  。解压，在**dist父目录** **dist父目录** **dist父目录**中运行命令：`serve -s dist` <br>
 + 正常使用方法：
   + 项目安装 `npm install` 报错的话用NodeJS14的长期维护版 `https://nodejs.org/download/release/v14.19.1/`
   + 项目运行 `npm run serve` 报错的话安装 `npm install node-sass`
