@@ -16,4 +16,6 @@ Nodejs v16
   + 项目运行 `npm run serve` 报错的话安装 `npm install node-sass`
 + 后端项目地址 [点此访问](https://github.com/WongSilver/attendance_management_api)
 
++ 有同学安装过程中可能遇到`node-sass`安装失败, 可以参考链接的解决方案 `https://blog.csdn.net/kingslave1/article/details/130526329`
+
 ## [后端项目](https://github.com/WongSilver/attendance_management_api)包含了部分演示效果，有问题咨询 QQ:783244553
