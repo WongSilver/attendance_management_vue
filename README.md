@@ -18,4 +18,4 @@ Nodejs v16
 + 后端项目地址 [点此访问](https://github.com/WongSilver/attendance_management_api)
 
 
-## [后端项目](https://github.com/WongSilver/attendance_management_api)包含了部分演示效果，有问题咨询 QQ:783244553
+## [后端项目](https://github.com/WongSilver/attendance_management_api)包含了部分演示效果，有问题请扫码入群(Q群号: `952798632`)
